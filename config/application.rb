@@ -6,12 +6,9 @@ require 'rails/all'
 #   http://stackoverflow.com/questions/20361428
 I18n.enforce_available_locales = true
 
-if defined?(Bundler)
-  # If you precompile assets before deploying to production, use this line
-  Bundler.require(*Rails.groups(:assets => %w(development test)))
-  # If you want your assets lazily compiled in production, use this line
-  # Bundler.require(:default, :assets, Rails.env)
-end
+# Require the gems listed in Gemfile, including any gems
+# you've limited to :test, :development, or :production.
+Bundler.require(:default, Rails.env)
 
 module Foodsoft
   class Application < Rails::Application
@@ -41,9 +38,6 @@ module Foodsoft
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
-    # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password]
-    
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
 
@@ -67,5 +61,9 @@ module Foodsoft
     # It would be nice not to enable database connection when precompiling assets,
     # but i18n-js requires initialization, that's why it's on.
     config.assets.initialize_on_precompile = true
+
+    # Load legacy scripts from vendor
+    config.assets.precompile += [ 'vendor/assets/javascripts/*.js' ]
+
   end
 end

@@ -7,11 +7,11 @@ class Article < ActiveRecord::Base
   # Associations
   belongs_to :supplier
   belongs_to :article_category
-  has_many :article_prices, :order => "created_at DESC"
+  has_many :article_prices, -> { order("created_at DESC") }
 
   scope :undeleted, -> { where(deleted_at: nil) }
   scope :available, -> { undeleted.where(availability: true) }
-  scope :not_in_stock, :conditions => {:type => nil}
+  scope :not_in_stock, -> { where(type: nil) }
 
   # Validations
   validates_presence_of :name, :unit, :price, :tax, :deposit, :unit_quantity, :supplier_id, :article_category

@@ -6,7 +6,7 @@ Foodsoft::Application.routes.draw do
 
   get "sessions/new"
 
-  root :to => redirect("/#{FoodsoftConfig.scope}")
+  root :to => redirect("/#{FoodsoftConfig.scope}"), as: nil
 
 
   scope '/:foodcoop' do
@@ -16,21 +16,21 @@ Foodsoft::Application.routes.draw do
 
     ########### Sessions
 
-    match '/login' => 'sessions#new', :as => 'login'
-    match '/logout' => 'sessions#destroy', :as => 'logout'
+    get   '/login' => 'sessions#new', :as => 'login'
+    get   '/logout' => 'sessions#destroy', :as => 'logout'
     get   '/login/forgot_password' => 'login#forgot_password', as: :forgot_password
     post  '/login/reset_password' => 'login#reset_password', as: :reset_password
     get   '/login/new_password' => 'login#new_password', as: :new_password
     get   '/login/update_password' => 'login#update_password', as: :update_password
-    match '/login/accept_invitation/:token' => 'login#accept_invitation', as: :accept_invitation
+    match '/login/accept_invitation/:token' => 'login#accept_invitation', as: :accept_invitation, via: [:get, :post]
     resources :sessions, :only => [:new, :create, :destroy]
 
     ########### User specific
 
-    match '/home/profile' => 'home#profile', :as => 'my_profile'
-    put   '/home/update_profile' => 'home#update_profile', :as => 'update_profile'
-    match '/home/ordergroup' => 'home#ordergroup', :as => 'my_ordergroup'
-    match '/home/cancel_membership' => 'home#cancel_membership', :as => 'cancel_membership'
+    get   '/home/profile', :as => 'my_profile'
+    patch '/home/update_profile', :as => 'update_profile'
+    get   '/home/ordergroup', :as => 'my_ordergroup'
+    post  '/home/cancel_membership', :as => 'cancel_membership'
 
     ############ Orders, ordering
 
