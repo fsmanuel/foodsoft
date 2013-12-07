@@ -66,23 +66,7 @@ ActiveRecord::Schema.define(version: 20130920201529) do
 
   add_index "assignments", ["user_id", "task_id"], name: "index_assignments_on_user_id_and_task_id", unique: true, using: :btree
 
-<<<<<<< HEAD
-  create_table "deliveries", :force => true do |t|
-=======
-  create_table "configurable_settings", force: true do |t|
-    t.integer "configurable_id"
-    t.string  "configurable_type"
-    t.integer "targetable_id"
-    t.string  "targetable_type"
-    t.string  "name",              default: "", null: false
-    t.string  "value_type"
-    t.text    "value"
-  end
-
-  add_index "configurable_settings", ["name"], name: "index_configurable_settings_on_name", using: :btree
-
   create_table "deliveries", force: true do |t|
->>>>>>> rails4
     t.integer  "supplier_id"
     t.date     "delivered_on"
     t.datetime "created_at"
@@ -335,31 +319,17 @@ ActiveRecord::Schema.define(version: 20130920201529) do
     t.integer  "periodic_task_group_id"
   end
 
-<<<<<<< HEAD
-  add_index "tasks", ["due_date"], :name => "index_tasks_on_due_date"
-  add_index "tasks", ["name"], :name => "index_tasks_on_name"
-  add_index "tasks", ["workgroup_id"], :name => "index_tasks_on_workgroup_id"
-
-  create_table "users", :force => true do |t|
-    t.string   "nick"
-    t.string   "password_hash",          :default => "", :null => false
-    t.string   "password_salt",          :default => "", :null => false
-    t.string   "first_name",             :default => "", :null => false
-    t.string   "last_name",              :default => "", :null => false
-    t.string   "email",                  :default => "", :null => false
-=======
   add_index "tasks", ["due_date"], name: "index_tasks_on_due_date", using: :btree
   add_index "tasks", ["name"], name: "index_tasks_on_name", using: :btree
   add_index "tasks", ["workgroup_id"], name: "index_tasks_on_workgroup_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "nick",                   default: "", null: false
+    t.string   "nick"
     t.string   "password_hash",          default: "", null: false
     t.string   "password_salt",          default: "", null: false
     t.string   "first_name",             default: "", null: false
     t.string   "last_name",              default: "", null: false
     t.string   "email",                  default: "", null: false
->>>>>>> rails4
     t.string   "phone"
     t.datetime "created_on",                          null: false
     t.string   "reset_password_token"
