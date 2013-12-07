@@ -41,7 +41,7 @@ describe Article do
     sleep 1 # so that the new price really has a later creation time
     article.price += 1
     article.save!
-    expect(article.article_prices.map(&:price)).to eq([article.price, oldprice])
+    expect(article.article_prices.reload.map(&:price)).to eq([article.price, oldprice])
   end
 
   it 'is not in an open order by default' do
