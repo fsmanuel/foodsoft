@@ -111,6 +111,7 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     commonjs (0.2.7)
+    connection_pool (1.2.0)
     daemons (1.1.9)
     database_cleaner (1.2.0)
     debug_inspector (0.0.2)
@@ -362,6 +363,7 @@ DEPENDENCIES
   client_side_validations!
   client_side_validations-simple_form!
   coffee-rails (~> 4.0.0)
+  connection_pool
   daemons
   database_cleaner
   exception_notification
