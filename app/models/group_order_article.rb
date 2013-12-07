@@ -20,7 +20,7 @@ class GroupOrderArticle < ActiveRecord::Base
   # Setter used in group_order_article#new
   # We have to create an group_order, if the ordergroup wasn't involved in the order yet
   def ordergroup_id=(id)
-    self.group_order = GroupOrder.find_or_initialize_by_order_id_and_ordergroup_id(order_article.order_id, id)
+    self.group_order = GroupOrder.where(order_id: order_article.order_id, ordergroup_id: id).first_or_initialize
   end
 
   def ordergroup_id
@@ -36,7 +36,7 @@ class GroupOrderArticle < ActiveRecord::Base
     logger.debug("Current quantity = #{self.quantity}, tolerance = #{self.tolerance}")
 
     # Get quantities ordered with the newest item first.
-    quantities = group_order_article_quantities.find(:all, :order => 'created_on desc')
+    quantities = group_order_article_quantities.order('created_on DESC')
     logger.debug("GroupOrderArticleQuantity items found: #{quantities.size}")
 
     if (quantities.size == 0)
@@ -112,8 +112,7 @@ class GroupOrderArticle < ActiveRecord::Base
         # In total there are enough units ordered. Now check the individual result for the ordergroup (group_order).
         #
         # Get all GroupOrderArticleQuantities for this OrderArticle...
-        order_quantities = GroupOrderArticleQuantity.all(
-            :conditions => ["group_order_article_id IN (?)", order_article.group_order_article_ids], :order => 'created_on')
+        order_quantities = GroupOrderArticleQuantity.where(group_order_article_id: order_article.group_order_article_ids).order('created_on')
         logger.debug("GroupOrderArticleQuantity records found: #{order_quantities.size}")
 
         # Determine quantities to be ordered...

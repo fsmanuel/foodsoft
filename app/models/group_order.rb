@@ -17,7 +17,7 @@ class GroupOrder < ActiveRecord::Base
   scope :in_open_orders, -> { joins(:order).merge(Order.open) }
   scope :in_finished_orders, -> { joins(:order).merge(Order.finished_not_closed) }
 
-  scope :ordered, :include => :ordergroup, :order => 'groups.name'
+  scope :ordered, -> { includes(:ordergroup).order('groups.name') }
 
   # Generate some data for the javascript methods in ordering view
   def load_data
@@ -55,7 +55,7 @@ class GroupOrder < ActiveRecord::Base
   def save_group_order_articles
     for order_article in order.order_articles
       # Find the group_order_article, create a new one if necessary...
-      group_order_article = group_order_articles.find_or_create_by_order_article_id(order_article.id)
+      group_order_article = group_order_articles.where(order_article_id: order_article.id).first_or_create
 
       # Get ordered quantities and update group_order_articles/_quantities...
       quantities = group_order_articles_attributes.fetch(order_article.id.to_s, {:quantity => 0, :tolerance => 0})

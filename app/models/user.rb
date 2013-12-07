@@ -150,7 +150,7 @@ class User < ActiveRecord::Base
  
   #Returns an array with the users groups (but without the Ordergroups -> because tpye=>"")
   def member_of_groups()
-     self.groups.find(:all, :conditions => {:type => ""})
+     self.groups.where(type: '')
   end
 
   def self.authenticate(login, password)
