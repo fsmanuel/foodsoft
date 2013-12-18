@@ -33,7 +33,7 @@ gem 'daemons'
 gem 'twitter-bootstrap-rails'
 gem 'simple-navigation'
 gem 'simple-navigation-bootstrap'
-#gem 'meta_search', git: 'git://github.com/jetthoughts/meta_search.git' # other git repo for rails4; still breaks form_for -> ransack
+gem 'ransack'
 gem 'acts_as_tree'
 gem "rails-settings-cached", "0.3.1"
 gem 'resque'
